@@ -16,7 +16,8 @@ The platform is showing very little interest in [my proposal to allow processing
         "cssSelector1": {
             "be": "metamorphic",
             "having": {
-
+                "whenDefined": ["ui5-li", "ui5-list"],
+                "xslt": "./ui5-list.xslt"
             }
         }
     }
