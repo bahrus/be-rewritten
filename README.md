@@ -4,12 +4,16 @@ Extend be-written, but be able to apply DTR and xslt transforms on selected elem
 
 ```html
 <div be-rewritten='{
-    "cssSelector1": {
-        "be": "metamorphic",
-        "having": {
+    "from": "",
+    "match":{
+        "cssSelector1": {
+            "be": "metamorphic",
+            "having": {
 
+            }
         }
     }
+
 }'>
 ```
 
