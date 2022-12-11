@@ -9,7 +9,7 @@
     "package-check": "package-check"
   },
   "dependencies": {
-    "be-written": "0.0.4"
+    "be-written": "0.0.5"
   },
   "devDependencies": {
     "may-it-serve": "0.0.4",
