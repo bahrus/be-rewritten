@@ -1,8 +1,13 @@
 # be-rewritten
 
-The platform is showing very little interest in [my proposal to allow processing of streaming HTML in a service worker](https://discourse.wicg.io/t/proposal-support-cloudflares-htmlrewriter-api-in-workers/5721) (sniff!).  Consequently, we have little choice but to do something on the main thread, which is what this element decorator does, via mutation observing (sigh).
+## Backdrop
 
-Extend be-written, but be able to apply be-decorated element behaviors on selected elements as they appear, including DTR and xslt transforms.
+The platform is showing very little interest in [my proposal to allow processing of streaming HTML in a service worker](https://discourse.wicg.io/t/proposal-support-cloudflares-htmlrewriter-api-in-workers/5721) (sniff!).  Consequently, we have little choice but to do something on the main thread when we stream in HTML, which is what this element decorator does, via mutation observing (sigh).
+
+
+## Mission
+
+*be-rewritten* extends *be-written*, by adding the ability to apply be-decorated element behaviors on selected elements as they render on to the screen, including DTR and xslt transforms.
 
 ```html
 <div be-rewritten='{
