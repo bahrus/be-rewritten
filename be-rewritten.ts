@@ -6,13 +6,37 @@ import {BeWritten,
 import {register} from 'be-hive/register.js';
 import {define, BeDecoratedProps, DEMethods} from 'be-decorated/DE.js';
 import {ActionExt} from 'be-decorated/types';
-import {Actions, PP, PPE, VirtualProps, Proxy, ProxyProps, PPP} from './types';
+import {Actions, PP, PPE, VirtualProps, Proxy, ProxyProps, PPP, CSSSelectorBeHavingMap} from './types';
 import { ProxyProps as BWPP } from 'be-written/types';
 import { StreamOrator } from '../stream-orator/StreamOrator';
+import { PuntEvent } from 'be-based/types';
 
 export class BeRewritten extends BeWritten{
+
+    override async write(pp: PP) {
+        const {make} = pp;
+        pp.beBased = {
+            puntOn: Object.keys(make)
+        };
+        return super.write(pp);
+    }
     override async getSet(pp: PP, so: StreamOrator, target: Element){
-        const {} = pp;
+        const {make} = pp;
+        const controller = (<any>target).beDecorated.based.controller as EventTarget;
+        for(const cssSelector in make){
+            this.#hookupListener(pp, cssSelector, make, target, controller);
+        }
+    }
+
+    #hookupListener(pp: PP, cssSelector: string, make: CSSSelectorBeHavingMap, target: Element, controller: EventTarget ){
+        const beHaving = make[cssSelector];
+        const {} = beHaving;
+        //console.log({cssSelector});
+        controller.addEventListener(cssSelector, e => {
+            const detail = (e as CustomEvent).detail as PuntEvent;
+            console.log({e, detail});
+        });
+        
     }
 }
 
@@ -39,6 +63,9 @@ define<VirtualProps & BeDecoratedProps<VirtualProps, Actions>, Actions>({
             proxyPropDefaults
         },
         actions,
+    },
+    complexPropDefaults: {
+        controller: BeRewritten
     }
 });
 
