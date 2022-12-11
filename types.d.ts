@@ -5,8 +5,15 @@ import {
 import {BeDecoratedProps, MinimalProxy, EventConfigs} from 'be-decorated/types';
 
 export interface EndUserProps extends BeWrittenEndUserProps{
-
+    make: CSSSelectorBeHavingMap
 }
+
+export interface BeHaving<TEndUserProps = any> {
+    be: string,
+    having: TEndUserProps
+}
+
+export type CSSSelectorBeHavingMap = {[key: string]: BeHaving | BeHaving[]}
 
 export interface VirtualProps extends EndUserProps, MinimalProxy{
 

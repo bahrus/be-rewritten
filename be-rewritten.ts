@@ -12,7 +12,7 @@ import { StreamOrator } from '../stream-orator/StreamOrator';
 
 export class BeRewritten extends BeWritten{
     override async getSet(pp: PP, so: StreamOrator, target: Element){
-        
+        const {} = pp;
     }
 }
 
