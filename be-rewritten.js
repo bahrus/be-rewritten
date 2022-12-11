@@ -21,7 +21,7 @@ export class BeRewritten extends BeWritten {
         //console.log({cssSelector});
         controller.addEventListener(cssSelector, e => {
             const puntEvent = e.detail;
-            console.log({ e, puntEvent });
+            //console.log({e, puntEvent});
             const beHavingOrBeHavings = make[cssSelector];
             const beHavings = Array.isArray(beHavingOrBeHavings) ? beHavingOrBeHavings : [beHavingOrBeHavings];
             const { instance } = puntEvent;
