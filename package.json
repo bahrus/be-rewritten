@@ -4,10 +4,17 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "playwright test",
+    "serve": "node node_modules/may-it-serve/serve.js",
+    "package-check": "package-check"
   },
   "dependencies": {
     "be-written": "0.0.4"
+  },
+  "devDependencies": {
+    "may-it-serve": "0.0.4",
+    "@playwright/test": "1.28.1",
+    "@skypack/package-check": "0.2.2"
   },
   "repository": {
     "type": "git",
