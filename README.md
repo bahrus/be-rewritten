@@ -20,3 +20,20 @@ Extend be-written, but be able to apply DTR and xslt transforms on selected elem
 User must provide references to be-decorated web components separately.
 
 Download won't start until all web components have been registered.
+
+Can also be an array:
+
+```html
+<div be-rewritten='{
+    "from": "",
+    "match":{
+        "cssSelector1": [{
+            "be": "metamorphic",
+            "having": {
+
+            }
+        }]
+    }
+
+}'>
+```
