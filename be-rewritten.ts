@@ -10,6 +10,7 @@ import {Actions, PP, PPE, VirtualProps, Proxy, ProxyProps, PPP, CSSSelectorBeHav
 import { ProxyProps as BWPP } from 'be-written/types';
 import { StreamOrator } from '../stream-orator/StreamOrator';
 import { PuntEvent } from 'be-based/types';
+import {attach} from 'be-decorated/upgrade.js';
 
 export class BeRewritten extends BeWritten{
 
@@ -29,12 +30,27 @@ export class BeRewritten extends BeWritten{
     }
 
     #hookupListener(pp: PP, cssSelector: string, make: CSSSelectorBeHavingMap, target: Element, controller: EventTarget ){
-        const beHaving = make[cssSelector];
-        const {} = beHaving;
+        
         //console.log({cssSelector});
         controller.addEventListener(cssSelector, e => {
-            const detail = (e as CustomEvent).detail as PuntEvent;
-            console.log({e, detail});
+            const puntEvent = (e as CustomEvent).detail as PuntEvent;
+            console.log({e, puntEvent});
+            const beHavingOrBeHavings = make[cssSelector];
+            const beHavings = Array.isArray(beHavingOrBeHavings) ? beHavingOrBeHavings : [beHavingOrBeHavings];
+            const {instance} = puntEvent; 
+            for(const beHaving of beHavings){
+                const {be, having} = beHaving;
+                const wcName = 'be-' + be;
+                if(customElements.get(wcName)){
+                    const dem = document.createElement(wcName) as any as DEMethods;
+                    const aInstance = instance as any;
+                    if(aInstance.beDecorated === undefined) aInstance.beDecorated = {};
+                    aInstance.beDecorated[be] = having;
+                    attach(instance, be, dem.attach.bind(instance));
+                }else{
+                    instance.setAttribute(wcName, JSON.stringify(having));
+                }
+            }
         });
         
     }

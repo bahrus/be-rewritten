@@ -1,6 +1,7 @@
 import { BeWritten, virtualProps as BWVirtualProps, proxyPropDefaults as BWProxyPropDefaults, actions as BWActions } from 'be-written/be-written.js';
 import { register } from 'be-hive/register.js';
 import { define } from 'be-decorated/DE.js';
+import { attach } from 'be-decorated/upgrade.js';
 export class BeRewritten extends BeWritten {
     async write(pp) {
         const { make } = pp;
@@ -17,12 +18,28 @@ export class BeRewritten extends BeWritten {
         }
     }
     #hookupListener(pp, cssSelector, make, target, controller) {
-        const beHaving = make[cssSelector];
-        const {} = beHaving;
         //console.log({cssSelector});
         controller.addEventListener(cssSelector, e => {
-            const detail = e.detail;
-            console.log({ e, detail });
+            const puntEvent = e.detail;
+            console.log({ e, puntEvent });
+            const beHavingOrBeHavings = make[cssSelector];
+            const beHavings = Array.isArray(beHavingOrBeHavings) ? beHavingOrBeHavings : [beHavingOrBeHavings];
+            const { instance } = puntEvent;
+            for (const beHaving of beHavings) {
+                const { be, having } = beHaving;
+                const wcName = 'be-' + be;
+                if (customElements.get(wcName)) {
+                    const dem = document.createElement(wcName);
+                    const aInstance = instance;
+                    if (aInstance.beDecorated === undefined)
+                        aInstance.beDecorated = {};
+                    aInstance.beDecorated[be] = having;
+                    attach(instance, be, dem.attach.bind(instance));
+                }
+                else {
+                    instance.setAttribute(wcName, JSON.stringify(having));
+                }
+            }
         });
     }
 }
