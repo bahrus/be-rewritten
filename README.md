@@ -7,7 +7,7 @@ The platform is showing very little interest in [my proposal to allow processing
 
 ## Mission
 
-*be-rewritten* extends *be-written*, by adding the ability to apply be-decorated element behaviors on selected elements as they render on to the screen, including DTR and xslt transforms.
+*be-rewritten* extends *be-written*, by adding the ability to apply be-decorated element behaviors on selected elements as they render onto the screen, including DTR and xslt transforms.
 
 ```html
 <div be-rewritten='{
