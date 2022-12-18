@@ -4,13 +4,14 @@ import {BeWritten,
     actions as BWActions
 } from 'be-written/be-written.js';
 import {register} from 'be-hive/register.js';
-import {define, BeDecoratedProps, DEMethods} from 'be-decorated/DE.js';
+import {define, BeDecoratedProps} from 'be-decorated/DE.js';
 import {ActionExt} from 'be-decorated/types';
-import {Actions, PP, PPE, VirtualProps, Proxy, ProxyProps, PPP, CSSSelectorBeHavingMap} from './types';
-import { ProxyProps as BWPP } from 'be-written/types';
+import {CSSSelectorBeHavingMap} from 'trans-render/lib/types';
+import {Actions, PP, PPE, VirtualProps, Proxy, ProxyProps, PPP} from './types';
 import { StreamOrator } from '../stream-orator/StreamOrator';
 import { PuntEvent } from 'be-based/types';
-import {attach} from 'be-decorated/upgrade.js';
+import { makeItBe } from 'trans-render/lib/makeBe.js';
+import { getQuery } from 'trans-render/lib/specialKeys.js';
 
 export class BeRewritten extends BeWritten{
 
@@ -24,37 +25,29 @@ export class BeRewritten extends BeWritten{
     override async getSet(pp: PP, so: StreamOrator, target: Element){
         const {make} = pp;
         const controller = (<any>target).beDecorated.based.controller as EventTarget;
-        for(const cssSelector in make){
-            this.#hookupListener(pp, cssSelector, make, target, controller);
+        for(const key in make){
+            let cssSelector = key;
+            if(hasCapitalLetterRegExp.test(key)){
+                const qry = getQuery(key);
+                cssSelector = qry.query;
+            }
+            this.#hookupListener(pp, key, cssSelector, make, target, controller);
         }
     }
 
-    #hookupListener(pp: PP, cssSelector: string, make: CSSSelectorBeHavingMap, target: Element, controller: EventTarget ){
+    #hookupListener(pp: PP, key: string, cssSelector: string, make: CSSSelectorBeHavingMap, target: Element, controller: EventTarget ){
         
         //console.log({cssSelector});
         controller.addEventListener(cssSelector, e => {
             const puntEvent = (e as CustomEvent).detail as PuntEvent;
-            //console.log({e, puntEvent});
-            const beHavingOrBeHavings = make[cssSelector];
-            const beHavings = Array.isArray(beHavingOrBeHavings) ? beHavingOrBeHavings : [beHavingOrBeHavings];
-            const {instance} = puntEvent; 
-            for(const beHaving of beHavings){
-                const {be, having} = beHaving;
-                const wcName = 'be-' + be;
-                if(customElements.get(wcName)){
-                    const dem = document.createElement(wcName) as any as DEMethods;
-                    const aInstance = instance as any;
-                    if(aInstance.beDecorated === undefined) aInstance.beDecorated = {};
-                    aInstance.beDecorated[be] = having;
-                    attach(instance, be, dem.attach.bind(instance));
-                }else{
-                    instance.setAttribute(wcName, JSON.stringify(having));
-                }
-            }
+            const {instance} = puntEvent;
+            makeItBe(instance, key, make);
         });
         
     }
 }
+
+const hasCapitalLetterRegExp = /[A-Z]/;
 
 const tagName = 'be-rewritten';
 

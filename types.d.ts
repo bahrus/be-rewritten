@@ -3,17 +3,18 @@ import {
     Actions as BeWrittenActions,
 } from 'be-written/types';
 import {BeDecoratedProps, MinimalProxy, EventConfigs} from 'be-decorated/types';
+import {CSSSelectorBeHavingMap} from 'trans-render/lib/types';
 
 export interface EndUserProps extends BeWrittenEndUserProps{
     make: CSSSelectorBeHavingMap
 }
 
-export interface BeHaving<TEndUserProps = any> {
-    be: string,
-    having: TEndUserProps
-}
+// export interface BeHaving<TEndUserProps = any> {
+//     be: string,
+//     having: TEndUserProps
+// }
 
-export type CSSSelectorBeHavingMap = {[key: string]: BeHaving | BeHaving[]}
+// export type CSSSelectorBeHavingMap = {[key: string]: BeHaving | BeHaving[]}
 
 export interface VirtualProps extends EndUserProps, MinimalProxy{
 
