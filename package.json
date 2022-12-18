@@ -2,7 +2,24 @@
   "name": "be-rewritten",
   "version": "0.0.1",
   "description": "",
-  "main": "index.js",
+  "main": "be-rewritten.js",
+  "module": "be-rewritten.js",
+  "keywords": [
+    "web components",
+    "web component",
+    "custom elements",
+    "custom element",
+    "stream",
+    "declarative"
+  ],
+  "exports": {
+    ".": "./be-rewritten.js",
+    "./be-rewritten.js": "./be-rewritten.js"
+  },
+  "files": [
+    "*.*"
+  ],
+  "types": "types.d.ts",
   "scripts": {
     "test": "playwright test",
     "serve": "node node_modules/may-it-serve/serve.js",
