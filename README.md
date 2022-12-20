@@ -16,9 +16,13 @@ The platform is showing very little interest in [my proposal to allow processing
 
 It also can optionally absorb some of the functionality of [be-definitive](https://github.com/bahrus/be-definitive) -- be-written can be used to define a custom element, which will be reused/rewritten multiple times throughout the page [TODO]
 
+
+
+## Part I:  Applying non verbal spells on the HTML as it streams in
+
 ```html
 <div be-rewritten='{
-    "from": "",
+    "from": "https://my-cdn.com/my-content",
     "make":{
         "cssSelector1": {
             "be": "metamorphic",
@@ -32,7 +36,7 @@ It also can optionally absorb some of the functionality of [be-definitive](https
 }'>
 ```
 
-User must provide references to be-decorated web components separately.
+User must provide references to be-decorated based web components separately.
 
 If web component is not yet registered, simply adds the attribute.
 
@@ -41,7 +45,7 @@ Can also be an array:
 ```html
 <div be-rewritten='{
     "from": "",
-    "match":{
+    "make":{
         "cssSelector1": [
             {
                 "be": "metamorphic",
@@ -61,6 +65,8 @@ Can also be an array:
 }'>
 ```
 
-If the css selector requires a single quote, use \&apos; .  If double quote, use \&quot; .
+Supports JS-friendly [keys](https://github.com/bahrus/trans-render#syntax-example).
+
+
 
 
