@@ -12,7 +12,9 @@ The platform is showing very little interest in [my proposal to allow processing
 
 ## Mission
 
-*be-rewritten* extends *be-written*, by adding the ability to apply be-decorated element behaviors on selected elements as they render onto the screen, including DTR and xslt transforms.
+*be-rewritten* extends [*be-written*](https://github.com/bahrus/be-written), by adding the ability to apply [be-decorated](https://github.com/bahrus/be-decorated) element behaviors on selected elements as they render onto the screen, including DTR and xslt transforms.
+
+It also can optionally absorb some of the functionality of [be-definitive](https://github.com/bahrus/be-definitive) -- be-written can be used to define a custom element, which will be reused/rewritten multiple times throughout the page [TODO]
 
 ```html
 <div be-rewritten='{
